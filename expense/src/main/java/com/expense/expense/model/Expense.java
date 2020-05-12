@@ -23,7 +23,9 @@ public class Expense {
   private Instant date;
   
   private float amount;
-  
+
+  private String store;
+
   @ManyToOne
   private Category category;
 
