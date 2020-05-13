@@ -30,7 +30,7 @@ public class ExpenseController {
     return expenseRepository.findAll();
   }
 
-  @PostMapping("/expense/{id}")
+  @PostMapping("/expense")
   ResponseEntity<Expense> createExpense(@Valid @RequestBody Expense expense) throws URISyntaxException{
     Expense result = expenseRepository.save(expense);
     return ResponseEntity.created(new URI("/api/expense"+result.getId())).body(result);

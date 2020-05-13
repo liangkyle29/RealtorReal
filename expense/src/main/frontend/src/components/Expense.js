@@ -8,13 +8,27 @@ import {Link} from 'react-router-dom';
 
 class Expense extends Component {
 
-  state = {
-    date:new Date(),
-    isloading:true,
-    categories : [],
-    expenses:[]
+  emptyItem={
+    id:11,
+    date: new Date(),
+    amount: 111.00,
+    store: 'Home Depot',
+    category:[1,'Water']
   };
 
+  constructor(props){
+    super(props);
+    this.state={
+      date:new Date(),
+      isloading:true,
+      categories : [],
+      expenses:[],
+      item:this.emptyItem
+
+    }
+
+  }
+  
   handleDateChange = date => {
     this.setState({
       date: date
@@ -31,8 +45,11 @@ class Expense extends Component {
 
       this.setState({isloading:false, categories:bodycategories, expenses:bodyexpenses});
 
-      if (!response.ok) {
-        throw Error(response.statusText);
+      if (!rescategories.ok) {
+        throw Error(rescategories.statusText);
+      }
+      if (!resexpenses.ok) {
+        throw Error(resexpenses.statusText);
       }
     } catch (error) {
       console.log(error);
