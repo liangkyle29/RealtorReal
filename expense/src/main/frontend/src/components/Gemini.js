@@ -15,6 +15,7 @@ class Gemini extends Component {
   }
 
   async componentDidMount() {
+
     try {
       const response = await fetch('/api/expense/3');
       const body = await response.json();
