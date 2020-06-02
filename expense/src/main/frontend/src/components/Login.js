@@ -29,15 +29,25 @@ class Login extends Component {
 
   loginClicked() {
 
-    AuthenticationService
-    .executeBasicAuthenticationService(this.state.username, this.state.password)
-    .then(() => {
-      AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
-      this.props.history.push('/home');
-    }).catch(() => {
-      this.setState({ showSuccessMessage: false });
-      this.setState({ hasLoginFailed: true });
-    })
+    if(this.state.username==='admin' && this.state.password==='gdlyl1016') {
+      AuthenticationService
+      .executeBasicAuthenticationService(this.state.username,
+          this.state.password)
+      .then(() => {
+        AuthenticationService.registerSuccessfulLogin(this.state.username,
+            this.state.password);
+        this.props.history.push('/home');
+      }).catch(() => {
+        this.setState({showSuccessMessage: false});
+        this.setState({hasLoginFailed: true});
+      })
+    }
+    else {
+
+        this.setState({showSuccessMessage:false});
+        this.setState({hasLoginFailed:true});
+
+      }
   }
 
   render() {
