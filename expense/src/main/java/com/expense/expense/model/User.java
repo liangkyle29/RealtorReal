@@ -15,14 +15,11 @@ import lombok.NoArgsConstructor;
 public class User {
   
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy=GenerationType.AUTO)
   private int id;
   
-  private String name;
-  private String email;
-  
-  @OneToMany
-  private Set<Category> category;
-  
-  
+  private String username;
+
+  private String password;
+
 }

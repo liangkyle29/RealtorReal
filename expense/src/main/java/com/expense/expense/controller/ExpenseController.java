@@ -30,6 +30,11 @@ public class ExpenseController {
     return expenseRepository.findAll();
   }
 
+  @GetMapping("/expense/{locid}")
+  List<Expense> getExpense(@PathVariable Integer locid){
+    return expenseRepository.findByLocation_Id(locid);
+  }
+
   @PostMapping("/expense")
   ResponseEntity<Expense> createExpense(@Valid @RequestBody Expense expense) throws URISyntaxException{
     Expense result = expenseRepository.save(expense);

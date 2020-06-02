@@ -41,6 +41,9 @@ public class Expense {
   @ManyToOne
   private Category category;
 
+  @ManyToOne
+  private Location location;
+
   
    
 }
