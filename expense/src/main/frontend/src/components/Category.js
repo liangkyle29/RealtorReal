@@ -7,7 +7,6 @@ import {MDBDataTable} from "mdbreact";
 class Category extends Component {
   emptyItem={
     name:''
-
   };
   constructor(props){
     super(props);

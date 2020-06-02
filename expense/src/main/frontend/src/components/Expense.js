@@ -15,7 +15,8 @@ class Expense extends Component {
     itemNumber:'',
     store:'',
     amount:'',
-    category:[]
+    category:[],
+    location:[]
 
   };
   constructor(props){
@@ -23,6 +24,7 @@ class Expense extends Component {
     this.state={
       isloading:true,
       categories : [],
+      locations: [],
       expenses:[],
       items:[{}],
       item:this.emptyItem
@@ -32,17 +34,20 @@ class Expense extends Component {
     this.handletxtChange=this.handletxtChange.bind(this);
     this.handleDateChange=this.handleDateChange.bind(this);
     this.handleSelectChange=this.handleSelectChange.bind(this);
+    this.handleSelectChange2=this.handleSelectChange2.bind(this);
     this.remove=this.remove.bind(this);
   }
 
   async componentDidMount() {
     try {
       const rescategories = await fetch('/api/categories');
+      const reslocations = await fetch('/api/locations');
       const resexpenses = await fetch('/api/expenses');
       const bodycategories = await rescategories.json();
+      const bodylocations = await reslocations.json();
       const bodyexpenses = await resexpenses.json();
 
-      this.setState({isloading:false, categories:bodycategories, expenses:bodyexpenses});
+      this.setState({isloading:false, categories:bodycategories, locations:bodylocations, expenses:bodyexpenses});
 
       bodyexpenses.map(expense=>
           this.setState({items:this.state.items.concat({
@@ -50,6 +55,7 @@ class Expense extends Component {
               itemNumber:expense.itemNumber,
               item:expense.item,
               category:expense.category.name,
+              location:expense.location.address,
               //date: <Moment date={expense.date} format="YYYY/MM/DD" />,
               date:expense.date,
               store: expense.store,
@@ -61,6 +67,9 @@ class Expense extends Component {
 
       if (!rescategories.ok) {
         throw Error(rescategories.statusText);
+      }
+      if (!reslocations.ok) {
+        throw Error(reslocations.statusText);
       }
       if (!resexpenses.ok) {
         throw Error(resexpenses.statusText);
@@ -144,6 +153,21 @@ class Expense extends Component {
     }
   }
 
+  handleSelectChange2(event){
+    const target = event.target;
+    const value = target.value;
+
+    const selectedIndex = target.options.selectedIndex;
+    const id =target.options[selectedIndex].getAttribute('data-key');
+
+    let item = {...this.state.item};
+
+    if(value !== 'select'){
+      item['location']= {id:id,address:value};
+      this.setState({item:item});
+    }
+  }
+
 
   handleDateChange(date){
     let item = {...this.state.item};
@@ -160,7 +184,7 @@ class Expense extends Component {
 
   render() {
     const title = <h3> Add Expense</h3>;
-    const {isloading,categories,items} = this.state;
+    const {isloading,categories,locations,items} = this.state;
 
     let optionList = categories.map(
           category =>
@@ -168,6 +192,13 @@ class Expense extends Component {
                 {category.name}
               </option>
       );
+
+    let optionList2 = locations.map(
+        location =>
+            <option key={location.id} data-key={location.id} value={location.address}>
+              {location.address}
+            </option>
+    );
 
     // let rows = expenses.map(
     //     expense =>
@@ -222,6 +253,12 @@ class Expense extends Component {
           width: 100
         },
         {
+          label: 'Location',
+          field: 'location',
+          sort: 'asc',
+          width: 200
+        },
+        {
           label: 'Action',
           field: 'action',
           sort: 'asc',
@@ -265,6 +302,14 @@ class Expense extends Component {
                 <select onChange={this.handleSelectChange}>
                   <option value="select">Select</option>
                   {optionList}
+                </select>
+              </FormGroup>
+
+              <FormGroup className="col-md-4 mb-3">
+                <Label for="category">Location</Label>{'     '}
+                <select onChange={this.handleSelectChange2}>
+                  <option value="select">Select</option>
+                  {optionList2}
                 </select>
               </FormGroup>
 
