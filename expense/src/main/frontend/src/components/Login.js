@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import AuthenticationService from './AuthenticationService';
 import {Redirect} from "react-router";
+import {
+  Container, Col, Form,
+  FormGroup, Label, Input,
+  Button,
+} from 'reactstrap';
 
 class Login extends Component {
   constructor(props) {
@@ -56,23 +61,43 @@ class Login extends Component {
       return <Redirect to="/home" />
     }else {
       return (
+
           <div>
-            <h1>Login</h1>
-            <div className="container">
+            <Container className="App">
+              <h2>Login</h2>
               {this.state.hasLoginFailed && <div
                   className="alert alert-warning">Invalid Credentials</div>}
               {this.state.showSuccessMessage && <div>Login Sucessful</div>}
-              User Name: <input type="text" name="username"
-                                value={this.state.username}
-                                onChange={this.handleChange}/>
-              Password: <input type="password" name="password"
-                               value={this.state.password}
-                               onChange={this.handleChange}/>
-              <button className="btn btn-success"
-                      onClick={this.loginClicked}>Login
-              </button>
-            </div>
+              <Form className="d-sm-inline-flex">
+                  <FormGroup className="w-50">
+                    <Col>
+                    <Label>User Name: </Label>
+                    <Input type="text" name="username"
+                                  value={this.state.username}
+                                  onChange={this.handleChange}/>
+                    </Col>
+                  </FormGroup>
+
+
+                  <FormGroup className="w-50">
+                    <Col>
+                    <Label>Password:</Label>
+                    <Input type="password" name="password"
+                                   value={this.state.password}
+                                   onChange={this.handleChange}/>
+                    </Col>
+                  </FormGroup>
+              </Form>
+            </Container>
+            <Container className="App" >
+
+              <Button color="primary" onClick={this.loginClicked}>
+                Submit
+              </Button>
+
+            </Container>
           </div>
+
 
       )
     }
