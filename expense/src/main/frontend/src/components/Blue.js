@@ -15,7 +15,7 @@ class Blue extends Component {
 
   async componentDidMount() {
     try {
-      const response = await fetch('/api/expense/1');
+      const response = await fetch('/api/expense/3');
       const body = await response.json();
       this.setState({isloading:false});
 
