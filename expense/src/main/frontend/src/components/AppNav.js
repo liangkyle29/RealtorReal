@@ -15,10 +15,10 @@ class AppNav extends Component {
     return (
         <div>
           <Navbar color="dark" dark expand="md">
-            <NavbarBrand href="/home">382 Expense Application</NavbarBrand>
+            <NavbarBrand href="/">382 Expense Application</NavbarBrand>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/home">Home</NavLink>
+                <NavLink href="/">Home</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="/categories/">Categories</NavLink>
@@ -30,7 +30,7 @@ class AppNav extends Component {
               {!isUserLoggedIn
               &&
               <NavItem>
-                <NavLink href="/login/">Login</NavLink>
+                <NavLink href="/login">Login</NavLink>
               </NavItem>
               }
 

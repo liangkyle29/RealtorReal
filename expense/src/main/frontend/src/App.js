@@ -17,14 +17,13 @@ function App() {
         <Switch>
           <Route path='/' exact={true} component={Home} />
           <Route path="/login" exact={true} component={Login} />
-          <Route path="/home" exact={true} component={Home} />
+          {/*<Route path="/home" exact={true} component={Home} />*/}
           <AuthenticatedRoute path='/categories' exact={true} component={Category} />
           <AuthenticatedRoute path='/expenses' exact={true} component={Expense} />
           <AuthenticatedRoute path='/gemini' exact={true} component={Gemini} />
           <AuthenticatedRoute path='/blue' exact={true} component={Blue} />
           <AuthenticatedRoute path='/ocean' exact={true} component={Ocean} />
           <AuthenticatedRoute path='/logout' exact={true} component={Logout} />
-
         </Switch>
       </BrowserRouter>
   )

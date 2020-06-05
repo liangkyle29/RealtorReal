@@ -41,7 +41,7 @@ class Login extends Component {
       .then(() => {
         AuthenticationService.registerSuccessfulLogin(this.state.username,
             this.state.password);
-        this.props.history.push('/home');
+        this.props.history.push('/');
       }).catch(() => {
         this.setState({showSuccessMessage: false});
         this.setState({hasLoginFailed: true});
@@ -58,7 +58,7 @@ class Login extends Component {
   render() {
 
     if (AuthenticationService.isUserLoggedIn()) {
-      return <Redirect to="/home" />
+      return <Redirect to="/" />
     }else {
       return (
 
