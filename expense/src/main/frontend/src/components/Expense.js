@@ -109,10 +109,13 @@ class Expense extends Component {
 
   async handleSubmit(event){
     const {item} = this.state;
-
+    this.setState({hasAmount: false});
     event.preventDefault();
 
-    if(!item.amount || isNaN(item.amount)){
+    if(!item.amount){
+      this.setState({hasAmount: true});
+    }
+    if(isNaN(item.amount)){
       this.setState({hasAmount: true});
     }
     if(item.category.length === 0){
