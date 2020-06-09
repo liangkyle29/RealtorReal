@@ -27,6 +27,10 @@ class Expense extends Component {
       locations: [],
       expenses:[],
       items:[{}],
+      hasDate: false,
+      hasCategory: false,
+      hasLocation: false,
+      hasAmount: false,
       item:this.emptyItem
 
     };
@@ -107,28 +111,46 @@ class Expense extends Component {
     const {item} = this.state;
 
     event.preventDefault();
-    await fetch('/api/expense',{
-      method:'POST',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type':'application/json'
-      },
-      body:JSON.stringify(item)
-    }).then((response) =>{
-      if (response.status !== 200) {
-        throw new Error("Bad response from server");
-      }
 
+    if(!item.amount){
+      this.setState({hasAmount: true});
+    }
+    else if (isNaN(item.amount)){
+      this.setState({hasAmount: true});
+    }
+    else if(item.category.length === 0){
+      this.setState({hasCategory: true});
+    }
+    else if(item.location.length === 0){
+      this.setState({hasLocation: true});
+    }
+    else if(!item.date){
+      this.setState({hasDate: true});
+    }
 
-      return response;
+    else {
+      await fetch('/api/expense', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(item)
+      }).then((response) => {
+        if (response.status !== 200) {
+          throw new Error("Bad response from server");
+        }
+        return response;
 
-    }).catch((error) => {
-      console.log(error)
-    });
+      }).catch((error) => {
+        console.log(error)
+      });
 
-    //this.props.history.push("/expenses");
-
-    window.location.reload(false);
+      //this.props.history.push("/expenses");
+      this.setState({hasAmount: false, hasCategory:false,
+        hasLocation:false, hasDate:false});
+      window.location.reload(false);
+    }
 
   }
 
@@ -154,7 +176,10 @@ class Expense extends Component {
 
     if(value !== 'select'){
       item['category']= {id:id,name:value};
-      this.setState({item:item});
+      this.setState({item:item,hasCategory:false});
+    }
+    else {
+      this.setState({hasCategory: true});
     }
   }
 
@@ -169,7 +194,10 @@ class Expense extends Component {
 
     if(value !== 'select'){
       item['location']= {id:id,address:value};
-      this.setState({item:item});
+      this.setState({item:item,hasLocation:false});
+    }
+    else {
+      this.setState({hasLocation: true});
     }
   }
 
@@ -178,9 +206,7 @@ class Expense extends Component {
     let item = {...this.state.item};
     item.date = date;
 
-    this.setState({
-      item:item
-    });
+    this.setState({ item:item});
   };
 
 
@@ -189,7 +215,7 @@ class Expense extends Component {
 
   render() {
     const title = <h3> Add Expense</h3>;
-    const {isloading,categories,locations,items} = this.state;
+    const {isloading,categories,locations,items,hasLocation,hasCategory,hasAmount,hasDate} = this.state;
 
     let optionList = categories.map(
           category =>
@@ -298,11 +324,15 @@ class Expense extends Component {
               </FormGroup>
 
               <FormGroup className="col-md-2 mb-3">
+                {hasAmount && <div
+                    className="alert alert-warning">Amount must be a number and not Empty </div>}
                 <Label for="amount">Amount</Label>
                 <Input type="text" name="amount" id="amount" onChange={this.handletxtChange} />
               </FormGroup>
 
               <FormGroup className="col-md-4 mb-3">
+                {hasCategory && <div
+                    className="alert alert-warning">Must have a category </div>}
                 <Label for="category">Category</Label>{'     '}
                 <select onChange={this.handleSelectChange}>
                   <option value="select">Select</option>
@@ -311,6 +341,8 @@ class Expense extends Component {
               </FormGroup>
 
               <FormGroup className="col-md-4 mb-3">
+                {hasLocation && <div
+                    className="alert alert-warning">Must have a location </div>}
                 <Label for="category">Location</Label>{'     '}
                 <select onChange={this.handleSelectChange2}>
                   <option value="select">Select</option>
@@ -319,6 +351,8 @@ class Expense extends Component {
               </FormGroup>
 
               <FormGroup className="col-md-4 mb-1">
+                {hasDate && <div
+                    className="alert alert-warning">Must have a date </div>}
                 <Label for="date">Date</Label>
                 {'     '}
                 <DatePicker

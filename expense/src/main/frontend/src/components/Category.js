@@ -14,6 +14,7 @@ class Category extends Component {
       isloading: true,
       categories: [],
       item: this.emptyItem,
+      hasCategory: false,
       items: [{}]
     };
 
@@ -71,30 +72,32 @@ class Category extends Component {
   async handleSubmit(event){
 
     const {item} = this.state;
-
     event.preventDefault();
-    await fetch('/api/category',{
-      method:'POST',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type':'application/json'
-      },
-      body:JSON.stringify(item)
 
-    }).then((response) =>{
-      if (response.status !== 200) {
-        throw new Error("Bad response from server");
-      }
-      return response;
+    if(item.name){
+      await fetch('/api/category',{
+        method:'POST',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(item)
 
+      }).then((response) =>{
+        if (response.status !== 200) {
+          throw new Error("Bad response from server");
+        }
+        return response;
+      }).catch((error) => {
+        console.log(error)
+      });
 
-    }).catch((error) => {
-      console.log(error)
-    });
+      this.setState({hasCategory: false});
+      window.location.reload(false);
+    } else{
+      this.setState({hasCategory: true});
+    }
 
-
-
-    window.location.reload(false);
   }
 
   handletxtChange(event){
@@ -109,7 +112,7 @@ class Category extends Component {
 
   render() {
 
-    const{isloading,items} = this.state;
+    const{isloading,items,hasCategory} = this.state;
     const title = <h3> Add Categories</h3>;
 
     let data = {
@@ -145,6 +148,8 @@ class Category extends Component {
             {title}
             <Form onSubmit={this.handleSubmit}>
               <FormGroup className="col-md-4 mb-3">
+                {hasCategory && <div
+                    className="alert alert-warning">Enter a category name</div>}
                 <Label for="name">Category Name</Label>
                 <Input type="text" name="name" id="name" onChange={this.handletxtChange} />
               </FormGroup>
