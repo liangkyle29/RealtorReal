@@ -115,16 +115,15 @@ class Expense extends Component {
     if(!item.amount || isNaN(item.amount)){
       this.setState({hasAmount: true});
     }
-    else if(item.category.length === 0){
+    if(item.category.length === 0){
       this.setState({hasCategory: true});
     }
-    else if(item.location.length === 0){
+    if(item.location.length === 0){
       this.setState({hasLocation: true});
     }
-    else if(!item.date){
+    if(!item.date){
       this.setState({hasDate: true});
     }
-
     else {
       await fetch('/api/expense', {
         method: 'POST',
@@ -320,9 +319,9 @@ class Expense extends Component {
                 <Input type="text" name="item" id="item" onChange={this.handletxtChange} />
               </FormGroup>
 
+              {hasAmount && <div
+                  className="alert alert-warning">Must have an amount </div>}
               <FormGroup className="col-md-2 mb-3">
-                {hasAmount && <div
-                    className="alert alert-warning">Must have an amount </div>}
                 <Label for="amount">Amount</Label>
                 <Input type="text" name="amount" id="amount" onChange={this.handletxtChange} />
               </FormGroup>
