@@ -72,6 +72,7 @@ class Category extends Component {
 
     const {item} = this.state;
 
+    event.preventDefault();
     await fetch('/api/category',{
       method:'POST',
       headers:{
@@ -84,9 +85,6 @@ class Category extends Component {
       if (response.status !== 200) {
         throw new Error("Bad response from server");
       }
-      event.preventDefault();
-      this.props.history.push("/categories");
-
       return response;
 
 
@@ -96,6 +94,7 @@ class Category extends Component {
 
 
 
+    window.location.reload(false);
   }
 
   handletxtChange(event){
