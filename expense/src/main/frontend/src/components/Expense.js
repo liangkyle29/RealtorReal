@@ -112,10 +112,7 @@ class Expense extends Component {
 
     event.preventDefault();
 
-    if(!item.amount){
-      this.setState({hasAmount: true});
-    }
-    else if (isNaN(item.amount)){
+    if(!item.amount || isNaN(item.amount)){
       this.setState({hasAmount: true});
     }
     else if(item.category.length === 0){
@@ -325,7 +322,7 @@ class Expense extends Component {
 
               <FormGroup className="col-md-2 mb-3">
                 {hasAmount && <div
-                    className="alert alert-warning">Amount must be a number and not Empty </div>}
+                    className="alert alert-warning">Must have an amount </div>}
                 <Label for="amount">Amount</Label>
                 <Input type="text" name="amount" id="amount" onChange={this.handletxtChange} />
               </FormGroup>
