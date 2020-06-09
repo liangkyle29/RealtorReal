@@ -1,7 +1,6 @@
 package com.expense.expense.model;
 
 import java.sql.Date;
-import java.time.Instant;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,9 +38,11 @@ public class Expense {
   private String store;
 
   @ManyToOne
+  @Column(nullable = false)
   private Category category;
 
   @ManyToOne
+  @Column(nullable = false)
   private Location location;
 
   
