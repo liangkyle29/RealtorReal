@@ -66,7 +66,7 @@ class Blue extends Component {
   }
 
   render() {
-    const title = <h3> 139 Gemini Cres Expenses</h3>;
+    const title = <h3> 382 Blue Grass Expenses</h3>;
     const {isloading,items} = this.state;
 
     let data = {

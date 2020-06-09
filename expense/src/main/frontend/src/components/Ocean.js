@@ -67,7 +67,7 @@ class Ocean extends Component {
   }
 
   render() {
-    const title = <h3> 139 Gemini Cres Expenses</h3>;
+    const title = <h3> 39 Ocean View Expenses</h3>;
     const {isloading,items} = this.state;
 
     let data = {
