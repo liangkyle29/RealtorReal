@@ -79,18 +79,22 @@ class Category extends Component {
         'Content-Type':'application/json'
       },
       body:JSON.stringify(item)
+
     }).then((response) =>{
       if (response.status !== 200) {
         throw new Error("Bad response from server");
       }
+      event.preventDefault();
+      this.props.history.push("/categories");
+
       return response;
+
 
     }).catch((error) => {
       console.log(error)
     });
 
-    event.preventDefault();
-    this.props.history.push("/categories");
+
 
   }
 

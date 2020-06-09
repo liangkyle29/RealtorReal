@@ -117,14 +117,15 @@ class Expense extends Component {
       if (response.status !== 200) {
         throw new Error("Bad response from server");
       }
+      event.preventDefault();
+      this.props.history.push("/expenses");
       return response;
 
     }).catch((error) => {
       console.log(error)
     });
 
-    event.preventDefault();
-    this.props.history.push("/expenses");
+
   }
 
 
