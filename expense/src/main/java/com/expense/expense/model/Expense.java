@@ -24,7 +24,7 @@ public class Expense {
   private int id;
 
   @Column(nullable = true)
-  private Integer itemNumber;
+  private Long itemNumber;
 
   @Column(nullable = true)
   private String item;
