@@ -136,8 +136,9 @@ class Expense extends Component {
         },
         body: JSON.stringify(item)
       }).then((response) => {
-        if (response.status !== 200) {
+        if (!response.ok) {
           throw new Error("Bad response from server");
+
         }
         return response;
 
