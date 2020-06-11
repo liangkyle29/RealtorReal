@@ -10,11 +10,11 @@ class Home extends Component {
         <div>
           <AppNav />
           <Container className="con">
-                 <Button color="primary" type="submit" href="/gemini/">139 Gemini Cres</Button>
+                 <Button color="primary" type="submit" href="/gemini/">G</Button>
                 {'  '}
-                 <Button className="btn-info" type="submit" href="/ocean/">39 Ocean View</Button>
+                 <Button className="btn-info" type="submit" href="/ocean/">O</Button>
                 {'  '}
-                 <Button className="btn-success" type="submit" href="/blue/">382 Blue Grass</Button>
+                 <Button className="btn-success" type="submit" href="/blue/">B</Button>
           </Container>
         </div>
 

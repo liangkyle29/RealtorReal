@@ -322,8 +322,10 @@ class Expense extends Component {
                 <Input type="text" name="item" id="item" onChange={this.handletxtChange} />
               </FormGroup>
 
+              <FormGroup className="col-md-4 mb-3">
               {hasAmount && <div
                   className="alert alert-warning">Must have an amount </div>}
+              </FormGroup>
               <FormGroup className="col-md-2 mb-3">
                 <Label for="amount">Amount</Label>
                 <Input type="text" name="amount" id="amount" onChange={this.handletxtChange} />
