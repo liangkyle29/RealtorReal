@@ -15,7 +15,7 @@ class AppNav extends Component {
     return (
         <div>
           <Navbar color="dark" dark expand="md">
-            <NavbarBrand href="/">382 Expense Application</NavbarBrand>
+            <NavbarBrand href="/">Expense Application</NavbarBrand>
             <Nav className="ml-auto" navbar>
               <NavItem>
                 <NavLink href="/">Home</NavLink>
